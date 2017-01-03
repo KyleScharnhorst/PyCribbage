@@ -132,6 +132,17 @@ class CardType(Enum):
 			return CardType.king
 		else:
 			return CardType.no_type
+	
+	def get_card_value(self):
+		card_val = 0
+		if self.value > 10:
+			card_val = 10;
+		else:
+			card_val = self.value
+		return card_val
+	
+	def get_list():
+		return [ct for ct in CardType]
 
 # Card suite class encapsulates suite functionality.
 class CardSuite(Enum):
@@ -155,11 +166,14 @@ class CardSuite(Enum):
 		elif suite_char == 's':
 			result = CardSuite.spade;
 		return result;
+	
+	def get_list():
+		return [cs for cs in CardSuite]	
 
 # Card object encapsulates card related data and functionality.
 class Card(object):
 	card_type = CardType.no_type;
-	value = 0;
+	value = 0; # necessary because jack, queen, king are actually equal to 10.
 	suite = CardSuite.no_type;
 
 	# Initializer
@@ -190,9 +204,7 @@ class Card(object):
 		#get card type and value
 		card_type = CardType.get_card_type(card_str)
 		print("card type: ", card_type)
-		card_val = card_type.value
-		if card_type.value > 10:
-			card_val = 10;
+		card_val = card_type.get_card_value()
 		print("card value: ", card_val)
 		#call card initializer and return
 		return Card(card_type, card_val, suite)
