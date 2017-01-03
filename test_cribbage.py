@@ -92,6 +92,26 @@ class Test_Card(unittest.TestCase):
             # Ensure suite is correct
             self.assertEqual(card.suite, card_test[1].suite)
     
+class Test_CardHand(unittest.TestCase):
+    
+    def test_create_hand(self):
+        raise NotImplementedError
+    
+    def test_score_flush(self):
+        raise NotImplementedError 
+    
+    def test_score_multiples(self):
+        raise NotImplementedError   
+    
+    def test_score_runs(self):
+        raise NotImplementedError
+    
+    def test_score_fifteens(self):
+        raise NotImplementedError
+    
+    def test_isValid(self):
+        raise NotImplementedError
+
 if __name__ == '__main__':
     generate_card_test_list()
     unittest.main()

@@ -299,7 +299,10 @@ class CardHand(object):
 	def score_runs(self):
 		if self.isValid():
 			score = 0
-			
+			raise NotImplementedError
+	
+	def score_fifteens(self):
+		raise NotImplementedError
 					
 	# Determines if the hand is valid for processing
 	def isValid(self):
