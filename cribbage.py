@@ -159,7 +159,6 @@ class CardSuite(Enum):
 # Card object encapsulates card related data and functionality.
 class Card(object):
 	card_type = CardType.no_type;
-	value = 0;
 	suite = CardSuite.no_type;
 
 	# Initializer
@@ -172,8 +171,6 @@ class Card(object):
 	# True if valid, false otherwise
 	def is_valid(self):
 		if self.card_type == CardType.no_type:
-			return False;
-		if self.value == 0:
 			return False;
 		if self.suite == CardSuite.no_type:
 			return False;
