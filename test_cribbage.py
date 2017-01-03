@@ -38,7 +38,9 @@ def generate_card_test_list():
     card_test_list = list()
     for card_type in card_type_test_types:
         for card_suite in card_suite_test_types:
-            card_test_list.append((card_type[0]+card_suite[0], card_type[1], card_suite[1]))
+            card_test_list.append( (card_type[0]+card_suite[0], 
+                                    cribbage.Card(card_type[1], card_type[1].get_card_value(), card_suite[1]) ) 
+                                 )
 
 class Test_atoi(unittest.TestCase):
     
@@ -52,13 +54,43 @@ class Test_CardType(unittest.TestCase):
     
     def test_get_card_type(self):
         for card_test_case in card_test_list:
-            self.assertEqual(cribbage.CardType.get_card_type(card_test_case[0]), card_test_case[1])
+            self.assertEqual(cribbage.CardType.get_card_type(card_test_case[0]), card_test_case[1].card_type)
             
+    def test_get_card_value(self):
+        for card_type in cribbage.CardType.get_list():
+            if card_type.value < 10:
+                self.assertEqual(card_type.get_card_value(), card_type.value)
+            else:
+                self.assertEqual(card_type.get_card_value(), 10)
+                
 class Test_CardSuite(unittest.TestCase):
     
     def test_get_suite(self):
         for card_test_case in card_test_list:
-            self.assertEqual(cribbage.CardSuite.get_suite(card_test_case[0]), card_test_case[2])        
+            self.assertEqual(cribbage.CardSuite.get_suite(card_test_case[0]), card_test_case[1].suite)
+            
+class Test_Card(unittest.TestCase):
+    invalid_cards = list(
+        [cribbage.Card(cribbage.CardType.no_type, 1, cribbage.CardSuite.diamond),
+         cribbage.Card(cribbage.CardType.ace, 0, cribbage.CardSuite.diamond),
+         cribbage.Card(cribbage.CardType.ace, 1, cribbage.CardSuite.no_type)]
+    );
+    
+    def test_is_valid_invalid_cards(self):
+        for invalid_card in self.invalid_cards:
+            self.assertFalse(invalid_card.is_valid())
+            
+    def test_create_card(self):
+        for card_test in card_test_list:
+            card = cribbage.Card.create_card(card_test[0]);
+            if card_test[1].card_type != cribbage.CardType.no_type:
+                self.assertTrue(card.is_valid())
+            # Ensure type is correct
+            self.assertEqual(card.card_type, card_test[1].card_type)
+            # Ensure value is correct
+            self.assertEqual(card.value, card_test[1].value)
+            # Ensure suite is correct
+            self.assertEqual(card.suite, card_test[1].suite)
     
 if __name__ == '__main__':
     generate_card_test_list()
