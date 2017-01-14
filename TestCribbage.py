@@ -23,7 +23,8 @@ card_type_test_types = list(
 );
 
 card_suite_test_types = list(
-    [("s", CardSuite.spade),
+    [("x", CardSuite.no_type),
+    ("s", CardSuite.spade),
     ("c", CardSuite.club),
     ("d", CardSuite.diamond),
     ("h", CardSuite.heart)]
@@ -83,8 +84,10 @@ class Test_Card(unittest.TestCase):
     def test_create_card(self):
         for card_test in card_test_list:
             card = Card.create_card(card_test[0]);
-            if card_test[1].card_type != CardType.no_type:
+            if card_test[1].card_type != CardType.no_type and card_test[1].suite != CardSuite.no_type:
                 self.assertTrue(card.is_valid())
+            else:
+                self.assertFalse(card.is_valid())
             # Ensure type is correct
             self.assertEqual(card.card_type, card_test[1].card_type)
             # Ensure value is correct
