@@ -99,9 +99,22 @@ class Test_Card(unittest.TestCase):
             self.assertEqual(card.suite, card_test[1].suite)
 
     def test_basic_score(self):
-        cut_card = None;
-        handle_cut_card("ccard js", cut_card)
-        handle_score("score jh,jd,jc,7c", cut_card)
+        cut_card = None
+        cut_card = handle_cut_card("ccard js", cut_card)
+        self.assertEquals(handle_score("score jh,jd,jc,7c", cut_card), 12)
+
+    def test_score_nobs(self):
+        cut_card = None
+        cut_card = handle_cut_card("ccard 4c", cut_card)
+        self.assertEquals(handle_score("score 2h,kd,jc,7c", cut_card), 1)
+        cut_card = handle_cut_card("ccard qs", cut_card)
+        self.assertEquals(handle_score("score js,ad,4c,8s", cut_card), 1)
+        cut_card = handle_cut_card("ccard ad", cut_card)
+        self.assertEquals(handle_score("score qh,jd,9c,7c", cut_card), 1)
+        cut_card = handle_cut_card("ccard 10h", cut_card)
+        self.assertEquals(handle_score("score 6h,8s,jh,4c", cut_card), 1)
+        cut_card = handle_cut_card("ccard 10h", cut_card)
+        self.assertEquals(handle_score("score 2c,4d,6s,8h", cut_card), 0)
     
 #class Test_CardHand(unittest.TestCase):
     
