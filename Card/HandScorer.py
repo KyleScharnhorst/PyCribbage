@@ -1,4 +1,4 @@
-from Card import *
+from Card.CardHand import *
 
 # This class encapsulates scoring functionality.
 class HandScorer(object):
@@ -6,22 +6,22 @@ class HandScorer(object):
     hand = None
 
     def __init__(self, a_card_hand):
-        hand = a_card_hand
+        self.hand = a_card_hand
 
     # Scores this hand of cribbage
     def score_hand(self):
         self.score = 0
         # Score knobs
-        #self.score += scorer.score_nobs()
+        self.score += self.score_nobs()
         # Score multiples (pairs, three of a kind, four of a kind)
         self.score += self.score_multiples()
         # Score runs - min of three cards
-        #self.score += scorer.score_runs()
+        #self.score += self.score_runs()
         # Score flush - is this a crib hand?  (only if cut card doesn't match a
         # hand that is a flush)
-        self.score += scorer.score_flush()
+        self.score += self.score_flush()
         # Score fifteens
-        #self.score += scorer.score_fifteens()
+        #self.score += self.score_fifteens()
     
     # Scores a hand for a flush
     # Returns the score value. 4/5 if flush or 0 for no flush.
@@ -82,7 +82,13 @@ class HandScorer(object):
     #def score_fifteens(self):
     #	raise NotImplementedError
 
-    ## Checks the hand for jacks of the same suit as the cut card.
-    #def score_nobs(self):
-    #	if self.hand.isValid():
-    #		raise NotImplementedError
+    # Checks the hand for jacks of the same suit as the cut card.
+    def score_nobs(self):
+        if self.hand.isValid():
+            for card in self.hand.card_hand:
+                if card.card_type == CardType.jack and card.suite == self.hand.cut_card.suite:
+                    print("1 point for his nobs.")
+                    return 1
+        return 0
+
+
