@@ -38,18 +38,29 @@ class CardHand(object):
         else: 
             print("Scoring hand is invalid.")
             return CardHand()
-                    
+                 
     # Determines if the hand is valid for processing
     def isValid(self):
         if self.validity_checked:
-            return self.validity
+            return self.validity;
         else:
-            self.validity_checked = True
+            self.validity_checked = True;
             if self.card_hand == None:
                 print("Error: Card Hand has no cards.")
-                self.validity = False
-                return validity
+                self.validity = False;
+                return validity;
             elif self.cut_card == None:
                 print("Error: Card Hand has no cut card.")
-                self.validity = False
+                self.validity = False;
+                return self.validity;
+            elif len(self.card_hand) != 4:
+                print("Error: Hand has more than 4 cards.")
+                self.validity = False;
+                return self.validity;
+            elif self.type_list == None:
+                print("Error: Type list is not initialized.")
+                self.validity = False;
+                return self.validity;
+            else:
+                self.validity = True;
                 return self.validity;
