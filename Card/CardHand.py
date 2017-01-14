@@ -1,4 +1,4 @@
-from Card.Card import Card
+from Card.Card import *
 class CardHand(object):
 	card_hand = None;
 	cut_card = None;
@@ -68,16 +68,16 @@ class CardHand(object):
 	def score_multiples(self):
 		if self.isValid():
 			score = 0
-			for ctype in range(len(type_list)):
-				if type_list[ctype] > 1:
+			for ctype in range(len(self.type_list)):
+				if self.type_list[ctype] > 1:
 					# Have at least a pair, score
-					if type_list[ctype] == 2:
+					if self.type_list[ctype] == 2:
 						print("Pair for 2.")
 						score += 2
-					elif type_list[ctype] == 3:
+					elif self.type_list[ctype] == 3:
 						print("Three of a kind for 6.")
 						score += 6
-					elif type_list[ctype] == 4:
+					elif self.type_list[ctype] == 4:
 						print("Four of a kind for 12.")
 						score += 12
 					else:
@@ -88,31 +88,31 @@ class CardHand(object):
 			print("Unexpecred multiples result, returning score of 0.")
 		return 0
 
-	def score_runs(self):
-		if self.isValid():
-			score = 0
-			raise NotImplementedError
+	#def score_runs(self):
+	#	if self.isValid():
+	#		score = 0
+	#		raise NotImplementedError
 	
-	def score_fifteens(self):
-		raise NotImplementedError
+	#def score_fifteens(self):
+	#	raise NotImplementedError
 
-	# Checks the hand for jacks of the same suit as the cut card.
-	def score_nobs(self):
-		if self.isValid():
-			raise NotImplementedError
+	## Checks the hand for jacks of the same suit as the cut card.
+	#def score_nobs(self):
+	#	if self.isValid():
+	#		raise NotImplementedError
 
 	def score_hand(self):
 		self.score = 0
 		# Score knobs
-		self.score += self.score_nobs()
+		#self.score += self.score_nobs()
 		# Score multiples (pairs, three of a kind, four of a kind)
 		self.score += self.score_multiples()
 		# Score runs - min of three cards
-		self.score += self.score_runs()
+		#self.score += self.score_runs()
 		# Score flush - is this a crib hand? (only if cut card doesn't match a hand that is a flush)
 		self.score += self.score_flush()
 		# Score fifteens
-		self.score += self.score_fifteens()
+		#self.score += self.score_fifteens()
 					
 	# Determines if the hand is valid for processing
 	def isValid(self):
