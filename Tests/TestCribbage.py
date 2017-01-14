@@ -98,6 +98,11 @@ class Test_Card(unittest.TestCase):
             self.assertEqual(card.value, card_test[1].value)
             # Ensure suite is correct
             self.assertEqual(card.suite, card_test[1].suite)
+
+    def test_basic_score(self):
+        cut_card = None;
+        handle_cut_card("ccard js", cut_card)
+        handle_score("score jh,jd,jc,7c", cut_card)
     
 #class Test_CardHand(unittest.TestCase):
     
