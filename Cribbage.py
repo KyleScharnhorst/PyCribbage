@@ -58,7 +58,7 @@ def handle_score(score_input, cut_card):
     print("Scoring hand...");
     if cut_card == None:
         print("Cut card has not been set. See help for usage details.")
-        return
+        return None
     # Parse hand
     hand = CardHand.create_hand(score_input.rpartition(" ")[2], cut_card)
     # Check hand
@@ -67,6 +67,7 @@ def handle_score(score_input, cut_card):
         scorer = HandScorer(hand)
         scorer.score_hand()
         print("Total score: ", scorer.score)
+        return scorer.score
 
 # Main loop for application, continually asks for and handles input.
 def main():
