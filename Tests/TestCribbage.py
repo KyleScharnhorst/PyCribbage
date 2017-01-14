@@ -1,5 +1,6 @@
-from Cribbage import *
+from ..Source.Cribbage import *
 import unittest
+
 
 card_type_test_types = list(
     [("z", CardType.no_type),
