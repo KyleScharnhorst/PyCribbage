@@ -4,7 +4,6 @@ from Card.CardSuite import CardSuite
 from Misc.Utils import *
 import unittest
 
-
 card_type_test_types = list(
     [("z", CardType.no_type),
     ("a", CardType.ace),

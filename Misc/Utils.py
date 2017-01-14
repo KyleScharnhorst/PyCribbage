@@ -1,3 +1,4 @@
+
 # This module contains all utility functions
 
 # Recreation of ANSII C's atoi function.

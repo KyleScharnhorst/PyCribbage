@@ -1,6 +1,6 @@
 from enum import Enum
-#from  ..Misc.Utils import atoi
 from Misc.Utils import atoi
+
 # CardType class encapsulates card type functionality.
 class CardType(Enum):
 	no_type = 0
