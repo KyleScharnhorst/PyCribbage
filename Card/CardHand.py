@@ -7,7 +7,6 @@ class CardHand(object):
     validity_checked = False
     validity = False
     type_list = None
-    score = 0	
 
     # Initializer
     def __init__(self, card_hand, cut_card):
@@ -15,6 +14,14 @@ class CardHand(object):
         self.cut_card = cut_card
         self.init_type_list()
         self.isValid()
+
+    # Initializes a bucket list used for scoring multiples and pairs
+    def init_type_list(self):
+            self.type_list = list([0] * CardType.__len__())
+            for card in self.card_hand:
+                self.type_list[card.card_type.value] += 1
+            # Add cut card card into type list to check multiples
+            self.type_list[self.cut_card.card_type.value] += 1
 
     # Takes a string like 1s,jh,3c,6d and builds and returns a hand object.
     def create_hand(hand_str, cut_card):
@@ -31,27 +38,6 @@ class CardHand(object):
         else: 
             print("Scoring hand is invalid.")
             return CardHand()
-
-    def init_type_list(self):
-            self.type_list = list([0] * CardType.__len__())
-            for card in self.card_hand:
-                self.type_list[card.card_type.value] += 1
-            # Add cut card card into type list to check multiples
-            self.type_list[self.cut_card.card_type.value] += 1
-
-    def score_hand(self):
-        self.score = 0
-        # Score knobs
-        #self.score += self.score_nobs()
-        # Score multiples (pairs, three of a kind, four of a kind)
-        self.score += self.score_multiples()
-        # Score runs - min of three cards
-        #self.score += self.score_runs()
-        # Score flush - is this a crib hand?  (only if cut card doesn't match a
-        # hand that is a flush)
-        self.score += self.score_flush()
-        # Score fifteens
-        #self.score += self.score_fifteens()
                     
     # Determines if the hand is valid for processing
     def isValid(self):

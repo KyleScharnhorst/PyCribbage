@@ -1,7 +1,7 @@
 from Misc.PrintCribbage import *
 from Card.Card import Card
 from Card.CardHand import CardHand
-
+from Card.HandScorer import HandScorer
 # This script is designed to score a hand in cribbage.
 # It should be used as such:
 # The python script will be ran from the command line, like: python3.5 cribbage.py
@@ -64,8 +64,9 @@ def handle_score(score_input, cut_card):
     # Check hand
     if hand.isValid():
         print("Scoring hand...");
-        hand.score_hand()
-        print("Total score: ", hand.score)
+        scorer = HandScorer(hand)
+        scorer.score_hand()
+        print("Total score: ", scorer.score)
 
 # Main loop for application, continually asks for and handles input.
 def main():
