@@ -1,7 +1,7 @@
 from Card import *
 
 # This class encapsulates scoring functionality.
-class Scorer(object):
+class HandScorer(object):
     score = 0
     
     # Scores a hand for a flush
