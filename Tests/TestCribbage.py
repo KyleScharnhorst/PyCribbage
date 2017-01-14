@@ -1,4 +1,7 @@
-from ..Source.Cribbage import *
+from Cribbage import *
+from Card.CardType import CardType
+from Card.CardSuite import CardSuite
+from Misc.Utils import *
 import unittest
 
 

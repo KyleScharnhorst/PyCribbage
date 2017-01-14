@@ -1,5 +1,5 @@
-from CardType import *
-from CardSuite import *
+from Card.CardType import *
+from Card.CardSuite import *
 # Card object encapsulates card related data and functionality.
 class Card(object):
 	card_type = CardType.no_type;
