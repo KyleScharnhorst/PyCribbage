@@ -115,6 +115,7 @@ class Test_Card(unittest.TestCase):
         self.assertEquals(handle_score("score 6h,8s,jh,4c", cut_card), 1)
         cut_card = handle_cut_card("ccard 10h", cut_card)
         self.assertEquals(handle_score("score 2c,4d,6s,8h", cut_card), 0)
+
     
 #class Test_CardHand(unittest.TestCase):
     
@@ -127,8 +128,18 @@ class Test_Card(unittest.TestCase):
 #    def test_score_multiples(self):
 #        raise NotImplementedError   
     
-#    def test_score_runs(self):
-#        raise NotImplementedError
+    def test_score_runs(self):
+        cut_card = None
+        cut_card = handle_cut_card("ccard ah", cut_card)
+        self.assertEquals(handle_score("score as,ac,2s,3d", cut_card), 15)
+        cut_card = handle_cut_card("ccard ah", cut_card)
+        self.assertEquals(handle_score("score as,2c,2s,3d", cut_card), 16)
+        cut_card = handle_cut_card("ccard ah", cut_card)
+        self.assertEquals(handle_score("score as,2c,3s,4d", cut_card), 10)
+        cut_card = handle_cut_card("ccard ah", cut_card)
+        self.assertEquals(handle_score("score 2s,3c,4s,5d", cut_card), 5)
+        cut_card = handle_cut_card("ccard ah", cut_card)
+        self.assertEquals(handle_score("score 2s,3c,8s,6d", cut_card), 3)
     
 #    def test_score_fifteens(self):
 #        raise NotImplementedError

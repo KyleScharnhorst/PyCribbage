@@ -15,8 +15,8 @@ class HandScorer(object):
         self.score += self.score_nobs()
         # Score multiples (pairs, three of a kind, four of a kind)
         self.score += self.score_multiples()
-        # Score runs - min of three cards
-        #self.score += self.score_runs()
+        #Score runs - min of three cards
+        self.score += self.score_runs()
         # Score flush - is this a crib hand?  (only if cut card doesn't match a
         # hand that is a flush)
         self.score += self.score_flush()
@@ -74,11 +74,40 @@ class HandScorer(object):
             print("Unexpecred multiples result, returning score of 0.")
         return 0
 
-    #def score_runs(self):
-    #	if self.hand.isValid():
-    #		score = 0
-    #		raise NotImplementedError
-    
+    def score_runs(self):
+        score = 0
+        if self.hand.isValid():
+            start_of_run = 0
+            consecutive_count = 0
+            # Traverse over all card buckets
+            for ctype in range(len(self.hand.type_list)):
+                # If we have a card start prepping for a run
+                if self.hand.type_list[ctype] > 0:
+                    # If we are not already in a run start
+                    if consecutive_count == 0:
+                        start_of_run = ctype
+                    # Increment run count
+                    consecutive_count += 1
+                # else did we reach a run count (3)?  
+                elif consecutive_count >= 3:
+                    # score the run
+                    score = consecutive_count
+                    run_index = start_of_run
+                    # Go through run multiply score if greater than 1
+                    while run_index < consecutive_count+start_of_run:
+                        card_count = self.hand.type_list[run_index]
+                        if card_count > 1:
+                            score *= card_count
+                        run_index += 1
+                    break # no more runs can be encountered.
+                # a run was not encounterd, reset vars.
+                else:
+                    start_of_run = 0
+                    consecutive_count = 0
+        if score > 0:
+            print("Score from run: {}".format(score))
+        return score
+ 
     #def score_fifteens(self):
     #	raise NotImplementedError
 
