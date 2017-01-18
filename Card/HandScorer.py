@@ -22,7 +22,7 @@ class HandScorer(object):
         # hand that is a flush)
         self.score += self.score_flush()
         # Score fifteens
-        #self.score += self.score_fifteens()
+        self.score += self.score_fifteens()
     
     # Scores a hand for a flush
     # Returns the score value. 4/5 if flush or 0 for no flush.

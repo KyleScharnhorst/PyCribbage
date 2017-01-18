@@ -108,7 +108,7 @@ class Test_Card(unittest.TestCase):
         cut_card = handle_cut_card("ccard 4c", cut_card)
         self.assertEquals(handle_score("score 2h,kd,jc,7c", cut_card), 1)
         cut_card = handle_cut_card("ccard qs", cut_card)
-        self.assertEquals(handle_score("score js,ad,4c,8s", cut_card), 1)
+        self.assertEquals(handle_score("score js,ad,4c,8s", cut_card), 5)
         cut_card = handle_cut_card("ccard ad", cut_card)
         self.assertEquals(handle_score("score qh,jd,9c,7c", cut_card), 1)
         cut_card = handle_cut_card("ccard 10h", cut_card)
@@ -139,7 +139,7 @@ class Test_Card(unittest.TestCase):
         cut_card = handle_cut_card("ccard ah", cut_card)
         self.assertEquals(handle_score("score 2s,3c,4s,5d", cut_card), 5)
         cut_card = handle_cut_card("ccard ah", cut_card)
-        self.assertEquals(handle_score("score 2s,3c,8s,6d", cut_card), 3)
+        self.assertEquals(handle_score("score 2s,3c,8s,6d", cut_card), 5)
     
     def test_score_fifteens(self):
         hand = CardHand([
