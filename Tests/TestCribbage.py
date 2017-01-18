@@ -141,8 +141,17 @@ class Test_Card(unittest.TestCase):
         cut_card = handle_cut_card("ccard ah", cut_card)
         self.assertEquals(handle_score("score 2s,3c,8s,6d", cut_card), 3)
     
-#    def test_score_fifteens(self):
-#        raise NotImplementedError
+    def test_score_fifteens(self):
+        hand = CardHand([
+            Card(CardType.five, 5, CardSuite.spade),
+            Card(CardType.five, 5, CardSuite.diamond),
+            Card(CardType.five, 5, CardSuite.heart),
+            Card(CardType.jack, 10, CardSuite.spade)
+            ], Card(CardType.five, 5, CardSuite.spade))# cut card
+
+        hand_scorer = HandScorer(hand)
+        score = hand_scorer.score_fifteens()
+        self.assertEqual(score, 16)
     
 #    def test_isValid(self):
 #        raise NotImplementedError

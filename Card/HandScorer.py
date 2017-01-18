@@ -1,4 +1,5 @@
 from Card.CardHand import *
+from itertools import combinations
 
 # This class encapsulates scoring functionality.
 class HandScorer(object):
@@ -107,9 +108,32 @@ class HandScorer(object):
         if score > 0:
             print("Score from run: {}".format(score))
         return score
- 
-    #def score_fifteens(self):
-    #	raise NotImplementedError
+
+    # Prints the output for a tuple that scored fifteen.
+    def print_scoring_fifteen(tuple, score):
+        print_str = ""
+        for card in tuple:
+            print_str += card.toString() + ", "
+        print_str += " for fifteen {}.".format(score)
+        print(print_str)
+
+    # This functions scores the hand for combinations of 15. 
+    def score_fifteens(self):
+        score = 0
+        if self.hand.isValid():
+            cards = self.hand.card_hand.copy()
+            cards.append(self.hand.cut_card)
+            for i in range(2,4):
+                card_combos = combinations(cards, i)
+                # for each tuple, see if their total adds to 15
+                for card_tuple in card_combos:
+                    tuple_value = 0
+                    for card in card_tuple:
+                        tuple_value += card.value
+                    if tuple_value == 15:
+                        score += 2
+                        HandScorer.print_scoring_fifteen(card_tuple, score)                  
+        return score
 
     # Checks the hand for jacks of the same suit as the cut card.
     def score_nobs(self):
