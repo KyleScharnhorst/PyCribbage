@@ -1,6 +1,17 @@
 from Card.CardHand import *
 from itertools import combinations
 
+# Helper function that gets user input
+# to determine if this hand is a crib hand or not.
+# Can affect scoring.
+def get_is_crib_input():
+    while 1:
+        user_input = input("Is this hand the crib? (y/n): ").lower()
+        if user_input.startswith("y"):
+            return True;
+        elif user_input.startswith("n"):
+            return False;
+
 # This class encapsulates scoring functionality.
 class HandScorer(object):
     score = 0
@@ -39,13 +50,11 @@ class HandScorer(object):
                         return 5;
                     else:
                         # Have hand flush and cut card is not same, determine if crib
-                        while 1:
-                            user_input = input("Is this hand the crib? (y/n): ").lower()
-                            if user_input.startswith("y"):
-                                return 0;
-                            elif user_input.startswith("n"):
-                                print("4 points from flush.")
-                                return 4;
+                        if get_is_crib_input():
+                            return 0;
+                        else:
+                            print("4 points from flush.")
+                            return 4;
         else:
             print("Unexpected flush result, returning score of 0.")		
         return 0;
@@ -75,6 +84,18 @@ class HandScorer(object):
             print("Unexpecred multiples result, returning score of 0.")
         return 0
 
+    # Helper function for scoring runs.
+    def count_run_score(consecutive_count, start_of_run, hand):
+        score = consecutive_count
+        run_index = start_of_run
+        # Go through run multiply score if greater than 1
+        while run_index < consecutive_count+start_of_run:
+            card_count = hand.type_list[run_index]
+            if card_count > 1:
+                score *= card_count
+            run_index += 1
+        return score;
+
     def score_runs(self):
         score = 0
         if self.hand.isValid():
@@ -82,7 +103,7 @@ class HandScorer(object):
             consecutive_count = 0
             # Traverse over all card buckets
             for ctype in range(len(self.hand.type_list)):
-                # If we have a card start prepping for a run
+                # If we have a card
                 if self.hand.type_list[ctype] > 0:
                     # If we are not already in a run start
                     if consecutive_count == 0:
@@ -91,20 +112,16 @@ class HandScorer(object):
                     consecutive_count += 1
                 # else did we reach a run count (3)?  
                 elif consecutive_count >= 3:
-                    # score the run
-                    score = consecutive_count
-                    run_index = start_of_run
-                    # Go through run multiply score if greater than 1
-                    while run_index < consecutive_count+start_of_run:
-                        card_count = self.hand.type_list[run_index]
-                        if card_count > 1:
-                            score *= card_count
-                        run_index += 1
-                    break # no more runs can be encountered.
+                    # found a run, break and score it
+                    # no more runs can be encountered.
+                    break 
                 # a run was not encounterd, reset vars.
                 else:
                     start_of_run = 0
                     consecutive_count = 0
+            # Handles case when last loop iteration is part of the run and all others.
+            if consecutive_count >= 3:
+                score = HandScorer.count_run_score(consecutive_count, start_of_run, self.hand)
         if score > 0:
             print("Score from run: {}".format(score))
         return score
@@ -123,7 +140,7 @@ class HandScorer(object):
         if self.hand.isValid():
             cards = self.hand.card_hand.copy()
             cards.append(self.hand.cut_card)
-            for i in range(2,6):
+            for i in range(2,6): # 2 - 5 inclusive. Cannot score a fifteen from a single card.
                 card_combos = combinations(cards, i)
                 # for each tuple, see if their total adds to 15
                 for card_tuple in card_combos:
