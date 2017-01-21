@@ -1,17 +1,64 @@
 import unittest
+from unittest.mock import patch
 from Cribbage import *
 from Card.CardType import CardType
 from Card.CardSuite import CardSuite
 
 class Test_HandScorer(unittest.TestCase):
-#    def test_create_hand(self):
-#        raise NotImplementedError
     
-#    def test_score_flush(self):
-#        raise NotImplementedError 
+    # Using unittest.mock.patch to mock user input for determining if crib hand.
+    @patch('Card.HandScorer.get_is_crib_input', return_value=True)
+    def test_score_flush_crib_hand(self, mock_method):
+        cut_card = None
+        cut_card = handle_cut_card("ccard 6s", cut_card)
+        self.assertEquals(handle_score("score as,qs,10s,ks", cut_card), 5)
+        # Crib Hand (Must have all 5 cards of the same suit to be a flush).
+        cut_card = handle_cut_card("ccard 6d", cut_card)
+        self.assertEquals(handle_score("score as,qs,10s,ks", cut_card), 0)
+
+    # Using unittest.mock.patch to mock user input for determining if crib hand.
+    @patch('Card.HandScorer.get_is_crib_input', return_value=False)
+    def test_score_flush_non_crib(self, mock_method):
+        cut_card = None
+        cut_card = handle_cut_card("ccard 6s", cut_card)
+        self.assertEquals(handle_score("score as,qs,10s,ks", cut_card), 5)
+        # Non-Crib Hand
+        cut_card = handle_cut_card("ccard 6d", cut_card)
+        self.assertEquals(handle_score("score as,qs,10s,ks", cut_card), 4)
+        # Other non-flush hands
+        cut_card = handle_cut_card("ccard 6s", cut_card)
+        self.assertEquals(handle_score("score as,qs,10s,kd", cut_card), 0)
+        cut_card = handle_cut_card("ccard 6s", cut_card)
+        self.assertEquals(handle_score("score as,qs,10d,kd", cut_card), 0)
+        cut_card = handle_cut_card("ccard 6s", cut_card)
+        self.assertEquals(handle_score("score as,qd,10d,kd", cut_card), 0)
+        cut_card = handle_cut_card("ccard 6d", cut_card)
+        self.assertEquals(handle_score("score as,qd,10d,kd", cut_card), 0)
     
-#    def test_score_multiples(self):
-#        raise NotImplementedError   
+    def test_score_multiples(self):
+        cut_card = None
+        # Four of a kind
+        cut_card = handle_cut_card("ccard 2h", cut_card)
+        self.assertEquals(handle_score("score 2s,2c,2d,ad", cut_card), 12)
+        # Four of a kind
+        cut_card = handle_cut_card("ccard ah", cut_card)
+        self.assertEquals(handle_score("score ks,kc,kd,kh", cut_card), 12)
+        # Full House
+        cut_card = handle_cut_card("ccard ah", cut_card)
+        self.assertEquals(handle_score("score ks,kc,kd,as", cut_card), 8)
+        # Three of a kind
+        cut_card = handle_cut_card("ccard js", cut_card)
+        self.assertEquals(handle_score("score jd,qc,kd,jh", cut_card), 15)
+        # Two pair
+        cut_card = handle_cut_card("ccard js", cut_card)
+        self.assertEquals(handle_score("score jd,qc,kd,kh", cut_card), 16)
+        # Pair
+        cut_card = handle_cut_card("ccard 6s", cut_card)
+        self.assertEquals(handle_score("score ad,qc,6d,kh", cut_card), 2)
+        # No Pairs
+        cut_card = handle_cut_card("ccard 6s", cut_card)
+        self.assertEquals(handle_score("score ad,qc,10d,kh", cut_card), 0)
+
     
     def test_score_runs(self):
         cut_card = None
