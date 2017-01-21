@@ -123,7 +123,7 @@ class HandScorer(object):
         if self.hand.isValid():
             cards = self.hand.card_hand.copy()
             cards.append(self.hand.cut_card)
-            for i in range(2,4):
+            for i in range(2,6):
                 card_combos = combinations(cards, i)
                 # for each tuple, see if their total adds to 15
                 for card_tuple in card_combos:
@@ -132,7 +132,7 @@ class HandScorer(object):
                         tuple_value += card.value
                     if tuple_value == 15:
                         score += 2
-                        HandScorer.print_scoring_fifteen(card_tuple, score)                  
+                        HandScorer.print_scoring_fifteen(card_tuple, score)    
         return score
 
     # Checks the hand for jacks of the same suit as the cut card.
