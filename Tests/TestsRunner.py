@@ -2,6 +2,8 @@ from TestCribbage import *
 from TestHandScorer import *
 
 if __name__ == '__main__':
+    global TESTING
+    TESTING = True
     generate_card_test_list()
     unittest.main()
     #test_suite = unittest.TestSuite()

@@ -24,5 +24,5 @@ class OutputScore(object):
             data[OutputScore.CUT_CARD_STR] = hand.cut_card.toShortString()
             data[OutputScore.SCORE_STR] = score
             json_result = json.dump(data, out_file)
-            #out_file.write(json_result)
+            out_file.write("\n")
 

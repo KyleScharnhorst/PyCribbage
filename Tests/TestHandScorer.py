@@ -108,4 +108,6 @@ class Test_HandScorer(unittest.TestCase):
         self.assertEquals(handle_score("score 2c,4d,6s,8h", cut_card), 0)
 
 if __name__ == '__main__':
+    global TESTING
+    TESTING = True
     unittest.main()

@@ -99,5 +99,7 @@ class Test_Card(unittest.TestCase):
             self.assertEqual(card.suite, card_test[1].suite)
 
 if __name__ == '__main__':
+    global TESTING
+    TESTING = True
     generate_card_test_list()
     unittest.main()
