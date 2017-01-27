@@ -1,5 +1,6 @@
 from Card.CardType import *
 from Card.CardSuite import *
+from Misc.Utils import *
 
 # Card object encapsulates card related data and functionality.
 class Card(object):
@@ -31,12 +32,12 @@ class Card(object):
         card_str = card_str.strip()
         #get suite
         suite = CardSuite.get_suite(card_str);
-        print("suite value: ", suite);
+        Debug.Print("suite value: ", suite);
         #get card type and value
         card_type = CardType.get_card_type(card_str)
-        print("card type: ", card_type)
+        Debug.Print("card type: ", card_type)
         card_val = card_type.get_card_value()
-        print("card value: ", card_val)
+        Debug.Print("card value: ", card_val)
         #call card initializer and return
         return Card(card_type, card_val, suite)
 

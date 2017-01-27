@@ -20,3 +20,11 @@ def atoi(a_str):
 		return int(result)
 	else:
 		return 0	 
+
+class Debug(object):
+    _Debugging = False
+    
+    @classmethod
+    def Print(class_info, *args):
+        if Debug._Debugging:
+            print(*args)
