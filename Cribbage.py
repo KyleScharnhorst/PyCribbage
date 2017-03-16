@@ -1,10 +1,3 @@
-from Misc.PrintCribbage import *
-from Card.Card import Card
-from Card.CardHand import CardHand
-from Card.HandScorer import HandScorer
-from Misc.OutputScore import *
-from Misc.Utils import *
-
 # This script is designed to score a hand in cribbage.
 # It should be used as such:
 # The python script will be ran from the command line, like: python3.5 cribbage.py
@@ -24,6 +17,13 @@ from Misc.Utils import *
 #   help - displays usage.
 #   quit - exits the application.
 # - Any unrecognized input will display the usage.
+
+from Misc.PrintCribbage import *
+from Card.Card import Card
+from Card.CardHand import CardHand
+from Card.HandScorer import HandScorer
+from Misc.OutputScore import *
+from Misc.Utils import *
 
 #CONSTANTS
 CUT_CARD = "ccard"
