@@ -93,3 +93,4 @@ ENV/
 *.pyproj*
 *.sln
 OutputScores.txt
+.vscode
